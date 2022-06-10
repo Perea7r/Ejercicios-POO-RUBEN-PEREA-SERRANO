@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use ITEC\Presencial\DAW\banco;
 use ITEC\Presencial\DAW\cuenta;
 
-final class cuentaTest extends TestCase {
+final class BancoTest extends TestCase {
     public function DPcuentaSaldoTest() {
         $cuentaBanco = new cuenta(1221, "prueba", 1000);
         $esperado = 1000;
