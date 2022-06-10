@@ -2,34 +2,34 @@
 
 namespace ITEC\Presencial\DAW;
 
-class cuenta {
-   private string $nombre;
-   private float $saldo;
-   private int $numCuenta;
-   private static float $saldoCuentas;
+class cuenta extends banco{
+    private string $nombre;
+    private int $nCuenta;
+    private float $saldo;
+    private static float $saldoCuentas=0;
 
-   public function __construct( string $nombre, float $saldo, int $numCuenta){
+    public function __construct(int $nCuenta, string $nombre, float $saldo){
+        $this->nombre=$nombre;
+        $this->nCuenta=$nCuenta;
+        $this->saldo=$saldo;
+        self::$saldoCuentas+=$saldo;
+    }
 
-       $this->nombre = $nombre;
-       $this->saldo = $saldo;
-       $this->numCuenta = $numCuenta;
-       self::$saldoCuentas += $saldo;
-   }
-  
-   public function retiroDinero(float $retirada_dinero){
-       $this->saldo = $this->saldo - $retirada_dinero;
-       self::$saldoCuentas = self::$saldoCuentas - $retirada_dinero;
+    public function ingresarDinero(float $cantidad){
+        $this->saldo += $cantidad;
+        self::$saldoCuentas += $cantidad;
+    }
 
-   }
+    public function sacarDinero(float $cantidad){
+        $this->saldo -= $cantidad;
+        self::$saldoCuentas -= $cantidad;
+    }
 
-   public function ingresoDinero(float $ingreso_dinero){
-       $this->saldo = $this->saldo + $ingreso_dinero;
-       self::$saldoCuentas = self::$saldoCuentas + $ingreso_dinero;
-   }
+    public static function saldoTotalCuentas(){ 
+        return self::$saldoCuentas;
+    }
 
-   public function saldo(){
-       return $this->saldo;
-   }
+    public function consultarSaldo(){
+        return $this->saldo;
+    }
 }
-
-   ?>

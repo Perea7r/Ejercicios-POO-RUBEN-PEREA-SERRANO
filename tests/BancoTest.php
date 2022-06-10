@@ -4,35 +4,32 @@ use PHPUnit\Framework\TestCase;
 use ITEC\Presencial\DAW\banco;
 use ITEC\Presencial\DAW\cuenta;
 
-final class bancoTest extends TestCase {
-    public function DPtestCuentaConsultarDinero() {
-        $cuenta1 = new cuenta("Ruben",1000,000001);
-        $cuenta1 -> ingresoDinero(1000);
-        $cuenta2 = new cuenta("David",2000,000002);
-        $cuenta2 -> retirodinero(1000);
-
+final class cuentaTest extends TestCase {
+    public function DPcuentaSaldoTest() {
+        $cuentaBanco = new cuenta(1221, "prueba", 1000);
+        $esperado = 1000;
+        $cuentaBanco1 = new cuenta(1221, "prueba1", 2000);
+        $cuentaBanco1->ingresarDinero(400);
+        $esperado1=2400;
+        $cuentaBanco2 = new cuenta(1221, "prueba2", 3000);
+        $cuentaBanco2->sacarDinero(200);
+        $esperado2=2794;
+        $esperado3=6194;
         return [
-            "Cuenta1" => [1000 + 1000 , $cuenta1 -> saldo()],
-            "Cuenta2" => [2000 - 1000, $cuenta2 -> saldo()]
+            "saldoCuenta" => [$esperado, $cuentaBanco->consultarSaldo()],
+            "saldoCuenta1" => [$esperado1, $cuentaBanco1->consultarSaldo()],
+            "saldoCuenta2" => [$esperado2, $cuentaBanco2->consultarSaldo()],
+            "saldoCuentas" => [$esperado3, cuenta::saldoTotalCuentas()],
         ];
     }
-
     /**
-     * @dataProvider DPtestCuentaConsultarDinero
+     * @dataProvider DPcuentaSaldoTest
      */
-    public function testCuentaConsultarDinero($esperado, $resultado) {
-        $this -> assertEquals($esperado, $resultado);
+    public function testcuentaSaldo($esperado, $actual) {
+        $this -> assertEquals($esperado, $actual);
     }
 
-    public function DPtestBancoConsultarDinero() {
-        return [
-            "Banco" => [3000, banco::dineroTotal()]
-        ];
-    }
-
-    public function testBancoConsultarDinero($esperado, $resultado) {
-        $this -> assertEquals($esperado, $resultado);
-    }
 }
+
 
 ?>
